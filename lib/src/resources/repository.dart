@@ -1,9 +1,8 @@
-import 'package:hacker_api/src/models/cache.dart';
-import 'package:hacker_api/src/models/item.dart';
-import 'package:hacker_api/src/models/source.dart';
-
-import '../../src/resources/news_api_provider.dart';
-import '../../src/resources/news_db_provider.dart';
+import '../models/cache.dart';
+import '../models/item.dart';
+import '../models/source.dart';
+import 'news_api_provider.dart';
+import 'news_db_provider.dart';
 
 class Repository {
   List<Source> sources = <Source>[
@@ -40,11 +39,17 @@ class Repository {
     }
 
     for (Cache cache in caches) {
-      if (source != cache as Source) {
+      if (source != (cache as Source)) {
         cache.addItem(item);
       }
     }
 
     return item;
+  }
+
+  clearCache() async {
+    for (Cache cache in caches) {
+      await cache.clear();
+    }
   }
 }

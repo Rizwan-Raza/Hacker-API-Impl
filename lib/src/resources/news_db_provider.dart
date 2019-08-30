@@ -1,11 +1,11 @@
 import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../../src/models/cache.dart';
 import '../../src/models/item.dart';
 import '../../src/models/source.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 class NewsDbProvider implements Source, Cache {
   Database db;
@@ -61,11 +61,16 @@ class NewsDbProvider implements Source, Cache {
 
   @override
   Future<int> addItem(ItemModel item) {
-    return db.insert("items", item.toMapForSql());
+    return db.insert("items", item.toMapForSql(),
+        conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   @override
   Future<List<int>> fetchTopIds() => null;
+
+  Future<int> clear() {
+    return db.delete("items");
+  }
 }
 
 final newsDbProvider = NewsDbProvider();

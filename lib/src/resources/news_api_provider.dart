@@ -1,9 +1,8 @@
 import 'dart:convert';
-
-import '../../src/models/source.dart';
-
-import '../../src/models/item.dart';
 import 'package:http/http.dart';
+
+import '../models/source.dart';
+import '../models/item.dart';
 
 final _root = "https://hacker-news.firebaseio.com/v0";
 
