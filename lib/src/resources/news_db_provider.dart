@@ -3,9 +3,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../src/models/cache.dart';
-import '../../src/models/item.dart';
-import '../../src/models/source.dart';
+import '../models/cache.dart';
+import '../models/item.dart';
+import '../models/source.dart';
 
 class NewsDbProvider implements Source, Cache {
   Database db;
@@ -51,9 +51,8 @@ class NewsDbProvider implements Source, Cache {
       where: "id = ?",
       whereArgs: [id],
     );
-
     if (maps.length > 0) {
-      ItemModel.fromDb(maps.first);
+      return ItemModel.fromDb(maps.first);
     }
 
     return null;
@@ -70,6 +69,11 @@ class NewsDbProvider implements Source, Cache {
 
   Future<int> clear() {
     return db.delete("items");
+  }
+
+  @override
+  String toString() {
+    return super.toString();
   }
 }
 

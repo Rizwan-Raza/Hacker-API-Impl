@@ -23,10 +23,9 @@ class App extends StatelessWidget {
     if (settings.name.startsWith("/detail/")) {
       return MaterialPageRoute(
         builder: (context) {
-          final commentsBloc = CommentsProvider.of(context);
           final itemId = int.parse(settings.name.replaceFirst("/detail/", ""));
 
-          commentsBloc.fetchItemWithComments(itemId);
+          CommentsProvider.of(context).fetchItemWithComments(itemId);
           return NewsDetail(
             itemId: itemId,
           );
@@ -35,6 +34,9 @@ class App extends StatelessWidget {
     } else {
       return MaterialPageRoute(
         builder: (context) {
+          // Temp
+          StoriesProvider.of(context).fetchTopIds();
+          print("Fetching :(");
           return NewsList();
         },
       );

@@ -9,8 +9,7 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = StoriesProvider.of(context);
-    // Temp
-    bloc.fetchTopIds();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Top News"),

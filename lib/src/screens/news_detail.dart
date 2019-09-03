@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hacker_api/src/blocs/comments_provider.dart';
 import 'package:hacker_api/src/models/item.dart';
+import 'package:hacker_api/src/widgets/comment.dart';
 
 class NewsDetail extends StatelessWidget {
   final itemId;
@@ -33,12 +34,31 @@ class NewsDetail extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<ItemModel> itemSnapshot) {
             if (!itemSnapshot.hasData) {
-              return Text("Loading Data");
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
-            return buildTitle(itemSnapshot.data);
+            return buildList(itemSnapshot.data, snapshot.data);
           },
         );
       },
+    );
+  }
+
+  buildList(ItemModel item, Map<int, Future<ItemModel>> itemMap) {
+    final children = <Widget>[];
+    children.add(buildTitle(item));
+    final commentsList = item.kids.map((kidId) {
+      return Comment(
+        itemId: kidId,
+        itemMap: itemMap,
+        depth: 0,
+      );
+    }).toList();
+    children.addAll(commentsList);
+
+    return ListView(
+      children: children,
     );
   }
 
